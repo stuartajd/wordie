@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Wordie</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-700">
+	<div class="max-w-2xl mx-auto my-10" id="wordie">
+		<div class="text-center text-2xl font-black text-yellow-400 mb-5">WORDIE</div>
+
+		<div class="max-w-md mx-auto mb-10">
+			<div v-for="(choice, test, col) in 6" class="flex justify-evenly mb-3">
+				<div v-for="(letter, test, ind) in 6" class="text-white border-2 border-gray-500 w-14 h-14 shadow-md">
+					{{guesses[col][ind].letter}}
+				</div>
+			</div>
+		</div>
+		
+		<div>
+			<div v-for="row of lettersRow" class="flex justify-center">
+				<button v-for="letter of row" @click="selectLetter(letter)" type="button" class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800">{{ letter }}</button>
+			</div>
+
+			<div class="flex justify-center">
+				<button type="button" class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800">Enter</button>
+
+				<button type="button" class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-gray-600 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-800">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2M3 12l6.414 6.414a2 2 0 001.414.586H19a2 2 0 002-2V7a2 2 0 00-2-2h-8.172a2 2 0 00-1.414.586L3 12z"></path></svg>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://unpkg.com/vue@next"></script>
+	<script src="wordies.js"></script>
+	<script>
+		const Wordie = {
+			data() {
+				return {
+					wordies: possibleWordies,
+					move: 0,
+					guesses: [
+						[{
+							letter: 'Q',
+							state: 'unknown' // wrong, contains, correct
+						}]
+					],
+					lettersRow: [
+						['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
+						['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
+						['Z', 'X', 'C', 'V', 'B', 'N', 'M']
+					]
+				}
+			},
+			methods: {
+				selectLetter(letter){
+					// Get the current guess
+					const currentGuess = this.guesses[this.move] || [];
+					// Add the new letter to the end.
+					currentGuess.push({
+						letter: letter,
+						state: 'unknown'
+					});
+				}
+			},
+			computed: {
+				todaysWordie() {
+					return this.wordies[0];
+				}
+			}
+		};
+
+		Vue.createApp(Wordie).mount('#wordie');
+	</script>
+</body>
+</html>
