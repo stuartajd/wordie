@@ -14,6 +14,9 @@
   </p>
 </div>
 
+## Is this a work in progress?
+Yes! I'm still figuring things out and may change everything and break stuff. WIP!
+
 ## Whats your inspiration?
 Wordie is my take on Wordle, created by Josh Wardle (https://www.powerlanguage.co.uk/wordle/).
 
